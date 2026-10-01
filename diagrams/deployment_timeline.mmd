@@ -1,0 +1,40 @@
+```mermaid
+gantt
+    title EVP System - 12 Week Pilot Plan (5 Signals)
+    dateFormat  YYYY-MM-DD
+    axisFormat  %W
+
+    section Phase 0: Foundation
+    Stakeholder Kickoff & MoUs           :a1, 2026-07-01, 7d
+    Site Survey (5 Junctions)            :a2, after a1, 7d
+    Legal: DPDP Review, Data Sharing     :a3, after a1, 7d
+    Team Setup & Procurement             :a4, after a1, 14d
+
+    section Phase 1: Build
+    Edge Hardware Install                :b1, after a4, 7d
+    RTSP Feed Validation                 :b2, after b1, 3d
+    Relay/RTU Bench Testing              :b3, after b1, 7d
+    Kafka + Cloud Namespace Setup        :b4, after a4, 7d
+    YOLOv11 Fine-tuning (Indian Data)    :b5, after a4, 14d
+    Shadow Mode: Detection Pipeline      :b6, after b5, 7d
+
+    section Phase 2: Test
+    Trajectory Prediction (Kalman)       :c1, after b6, 7d
+    MILP Optimizer in Simulation (SUMO)  :c2, after c1, 7d
+    Advisory Mode Go-Live                :c3, after c2, 7d
+    Controlled Override (Low Traffic)    :c4, after c3, 7d
+    Citizen App Beta (200 Users)         :c5, after c3, 14d
+
+    section Phase 3: Evaluation
+    Full Autonomous Pilot (72h Monitor)  :d1, after c4, 7d
+    KPI Measurement & Optimization       :d2, after d1, 7d
+    Stakeholder Review & Report          :d3, after d2, 7d
+    Scale-Up Proposal (20 Signals)       :d4, after d3, 3d
+```
+
+**Key Milestones:**
+- Week 2: All MoUs signed, hardware procured
+- Week 6: Shadow mode detection running on all 5 junctions
+- Week 9: Advisory mode with police dashboard
+- Week 10: First autonomous override at low-risk junction
+- Week 12: Go/No-Go decision for zone-scale expansion

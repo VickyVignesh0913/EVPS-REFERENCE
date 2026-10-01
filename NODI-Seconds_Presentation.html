@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NODI-Seconds Presentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #0a0a1a;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6vh 8vw;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    pointer-events: none;
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* ---- Slide 1: Title ---- */
+  .slide-title {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    align-items: center;
+    text-align: center;
+  }
+  .slide-title h1 {
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #ff6b35, #f7c948, #ff6b35);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+    margin-bottom: 0.4em;
+  }
+  @keyframes shimmer {
+    to { background-position: 200% center; }
+  }
+  .slide-title .tagline {
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    font-weight: 300;
+    color: #a8b2d1;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+  .slide-title .subtitle {
+    margin-top: 2em;
+    font-size: 0.95rem;
+    color: #5a6a8a;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .pulse-ring {
+    width: 120px; height: 120px;
+    border: 3px solid #ff6b35;
+    border-radius: 50%;
+    margin-bottom: 2em;
+    animation: pulse 2s ease-out infinite;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pulse-ring span { font-size: 2.8rem; }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,107,53,0.5); }
+    70% { box-shadow: 0 0 0 30px rgba(255,107,53,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,107,53,0); }
+  }
+
+  /* ---- Slide 2: Problem ---- */
+  .slide-problem { background: linear-gradient(135deg, #1a0a0a, #2d1117, #1a0a0a); }
+  .slide-problem h2 { color: #ff4d4d; }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5em;
+    margin-top: 2em;
+  }
+  .stat-card {
+    background: rgba(255,77,77,0.08);
+    border: 1px solid rgba(255,77,77,0.2);
+    border-radius: 16px;
+    padding: 1.8em 1.4em;
+    text-align: center;
+  }
+  .stat-card .number {
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: #ff4d4d;
+  }
+  .stat-card .label {
+    font-size: 0.95rem;
+    color: #c9a0a0;
+    margin-top: 0.4em;
+  }
+
+  /* ---- Common headings ---- */
+  .slide h2 {
+    font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+    font-weight: 700;
+    margin-bottom: 0.3em;
+  }
+  .slide h2 span { color: #f7c948; }
+  .slide .lead {
+    font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    color: #a8b2d1;
+    max-width: 800px;
+    line-height: 1.7;
+    margin-bottom: 1.5em;
+  }
+
+  /* ---- Slide 3: Solution ---- */
+  .slide-solution { background: linear-gradient(135deg, #0a1a0a, #112211, #0a1a0a); }
+  .solution-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2em;
+    margin-top: 1em;
+  }
+  .solution-box {
+    background: rgba(247,201,72,0.06);
+    border: 1px solid rgba(247,201,72,0.15);
+    border-radius: 16px;
+    padding: 1.6em;
+  }
+  .solution-box h3 {
+    font-size: 1.1rem;
+    color: #f7c948;
+    margin-bottom: 0.5em;
+  }
+  .solution-box p {
+    font-size: 0.95rem;
+    color: #b0c4a8;
+    line-height: 1.65;
+  }
+  .sensor-badge {
+    display: inline-block;
+    padding: 0.3em 0.9em;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0.3em 0.3em 0.3em 0;
+  }
+  .badge-mic { background: #1a3a5c; color: #5ba3e6; border: 1px solid #2a5a8c; }
+  .badge-cam { background: #2a1a3a; color: #c084fc; border: 1px solid #4a2a6a; }
+  .badge-relay { background: #1a3a2a; color: #5be6a8; border: 1px solid #2a5a4a; }
+
+  /* ---- Slide 4: How It Works ---- */
+  .slide-how { background: linear-gradient(135deg, #0a0a1a, #111133, #0a0a1a); }
+  .flow-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-top: 2em;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .flow-step {
+    text-align: center;
+    flex: 0 0 auto;
+    width: 160px;
+  }
+  .flow-icon {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 0.6em;
+    border: 2px solid rgba(91,163,230,0.3);
+    background: rgba(91,163,230,0.08);
+  }
+  .flow-step p {
+    font-size: 0.82rem;
+    color: #a8b2d1;
+    line-height: 1.5;
+  }
+  .flow-step strong { color: #f7c948; display: block; font-size: 0.9rem; margin-bottom: 0.3em; }
+  .flow-arrow {
+    display: flex; align-items: center; justify-content: center;
+    width: 50px; flex-shrink: 0;
+    font-size: 1.4rem; color: #5a6a8a;
+    padding-top: 0.8em;
+  }
+
+  /* ---- Slide 5: Safety ---- */
+  .slide-safety { background: linear-gradient(135deg, #1a1a0a, #2d2d11, #1a1a0a); }
+  .safety-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.4em;
+    margin-top: 1.8em;
+  }
+  .safety-card {
+    background: rgba(91,230,168,0.06);
+    border: 1px solid rgba(91,230,168,0.15);
+    border-radius: 14px;
+    padding: 1.4em 1.2em;
+    display: flex;
+    align-items: flex-start;
+    gap: 1em;
+  }
+  .safety-card .icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    margin-top: 0.1em;
+  }
+  .safety-card h4 { color: #5be6a8; font-size: 0.95rem; margin-bottom: 0.3em; }
+  .safety-card p { font-size: 0.88rem; color: #a8b8a0; line-height: 1.55; }
+
+  /* ---- Slide 6: Cost ---- */
+  .slide-cost { background: linear-gradient(135deg, #0a0a1a, #0a1a2d, #0a0a1a); }
+  .cost-compare {
+    display: flex;
+    gap: 2em;
+    margin-top: 2em;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cost-card {
+    border-radius: 18px;
+    padding: 2em 2.4em;
+    text-align: center;
+    min-width: 280px;
+    max-width: 340px;
+  }
+  .cost-card.ours {
+    background: linear-gradient(135deg, rgba(91,230,168,0.1), rgba(247,201,72,0.08));
+    border: 2px solid #5be6a8;
+  }
+  .cost-card.theirs {
+    background: rgba(255,77,77,0.08);
+    border: 1px solid rgba(255,77,77,0.25);
+  }
+  .cost-card .label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5em; }
+  .cost-card.ours .label { color: #5be6a8; }
+  .cost-card.theirs .label { color: #ff6b6b; }
+  .cost-card .price {
+    font-size: 2.4rem;
+    font-weight: 800;
+  }
+  .cost-card.ours .price { color: #f7c948; }
+  .cost-card.theirs .price { color: #ff4d4d; }
+  .cost-card .note { font-size: 0.88rem; color: #8892a8; margin-top: 0.5em; }
+  .savings-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #f7c948, #ff6b35);
+    color: #0a0a1a;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.5em 1.6em;
+    border-radius: 30px;
+    margin-top: 2em;
+  }
+
+  /* ---- Slide 7: Vision Detection ---- */
+  .slide-vision { background: linear-gradient(135deg, #0a0a1a, #1a0a2a, #0a0a1a); }
+
+  /* ---- Slide 8: Impact ---- */
+  .slide-impact { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); align-items: center; text-align: center; }
+  .slide-impact h2 span { color: #ff6b35; }
+  .impact-quote {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: #a8b2d1;
+    max-width: 750px;
+    line-height: 1.7;
+    margin: 1.5em auto;
+    font-style: italic;
+    border-left: 3px solid #f7c948;
+    padding-left: 1.2em;
+    text-align: left;
+  }
+  .slide-impact .closing {
+    margin-top: 2em;
+    font-size: 1.1rem;
+    color: #f7c948;
+    font-weight: 600;
+  }
+  .slide-impact .thanks {
+    margin-top: 0.8em;
+    font-size: 0.9rem;
+    color: #5a6a8a;
+  }
+
+  /* ---- Navigation ---- */
+  .nav-bar {
+    position: fixed;
+    bottom: 2vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    background: rgba(10,10,26,0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 40px;
+    padding: 0.5em 1.5em;
+    z-index: 100;
+  }
+  .nav-bar button {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #a8b2d1;
+    font-size: 1rem;
+    padding: 0.4em 1em;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav-bar button:hover { background: rgba(255,255,255,0.08); color: #fff; }
+  .nav-bar .counter { font-size: 0.85rem; color: #5a6a8a; min-width: 50px; text-align: center; }
+
+  /* ---- Progress bar ---- */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #ff6b35, #f7c948);
+    transition: width 0.4s ease;
+    z-index: 100;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .slide { padding: 5vh 6vw; }
+    .solution-cols { grid-template-columns: 1fr; }
+    .cost-compare { flex-direction: column; align-items: center; }
+    .flow-steps { flex-direction: column; align-items: center; }
+    .flow-arrow { transform: rotate(90deg); width: auto; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide slide-title active" data-index="0">
+  <div class="pulse-ring"><span>🚨</span></div>
+  <h1>NODI-Seconds</h1>
+  <p class="tagline">A Siren-Activated Green Signal Device with Safety Fallback to Clear Ambulances in Seconds</p>
+  <p class="subtitle">INSPIRE Awards — Science & Innovation</p>
+</div>
+
+<!-- SLIDE 2: THE PROBLEM -->
+<div class="slide slide-problem" data-index="1">
+  <h2>The <span>Problem</span></h2>
+  <p class="lead">Every day, ambulances waste the "golden hour" — the critical first 60 minutes — stuck in traffic at rigid, fixed-time signals.</p>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="number">80%</div>
+      <div class="label">Indian signals run on<br>fixed-time timers only</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">3–5 min</div>
+      <div class="label">Critical time wasted<br>per ambulance at junctions</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">30%</div>
+      <div class="label">Private ambulances have<br>no GPS tracking at all</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">1000s</div>
+      <div class="label">Lives lost each year<br>due to traffic delays</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: THE SOLUTION -->
+<div class="slide slide-solution" data-index="2">
+  <h2>The <span>Solution</span></h2>
+  <p class="lead">NODI-Seconds is a compact, tabletop retrofit device that attaches to existing traffic controllers — no GPS needed, no expensive infrastructure.</p>
+  <div>
+    <span class="sensor-badge badge-mic">🎤 Acoustic Mic — 600-1200 Hz</span>
+    <span class="sensor-badge badge-cam">📹 CCTV Camera — Vision Detection</span>
+    <span class="sensor-badge badge-relay">⚡ 4-Channel Relay Board</span>
+  </div>
+  <div class="solution-cols">
+    <div class="solution-box">
+      <h3>Dual-Confirm Detection</h3>
+      <p>Only triggers green when <strong>both</strong> the siren harmonics AND the CCTV vision confirmation agree — eliminating false positives from honking and noise.</p>
+    </div>
+    <div class="solution-box">
+      <h3>Zero Infrastructure Change</h3>
+      <p>Retrofits onto any existing fixed-time signal controller. Works for ALL ambulances — government and private — no GPS required.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: HOW IT WORKS -->
+<div class="slide slide-how" data-index="3">
+  <h2>How It <span>Works</span></h2>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="flow-icon">🚑</div>
+      <strong>Ambulance Approaches</strong>
+      <p>Siren blares + beacon flashes as it nears the junction</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-icon">🎤</div>
+      <strong>Siren Detected</strong>
+      <p>Mic picks up 600-1200 Hz siren harmonics</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-icon">📹</div>
+      <strong>Beacon Detected</strong>
+      <p>CCTV camera identifies ambulance shape & flashing lights</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-icon">🧠</div>
+      <strong>Dual-Confirm Logic</strong>
+      <p>Both sensors agree — confidence confirmed</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-icon">🟢</div>
+      <strong>Green Signal</strong>
+      <p>Cross-traffic goes Yellow (3s) → Green clears ambulance</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-icon">🔄</div>
+      <strong>Normal Cycle Resumes</strong>
+      <p>After passage, junction returns to normal operation</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: SAFETY -->
+<div class="slide slide-safety" data-index="4">
+  <h2>Safety <span>First</span></h2>
+  <p class="lead">Built-in safety ensures no junction can ever be left in a dangerous state.</p>
+  <div class="safety-grid">
+    <div class="safety-card">
+      <div class="icon">🚫</div>
+      <div>
+        <h4>No Conflicting Greens</h4>
+        <p>4-channel relay board physically prevents opposing lanes from ever showing green simultaneously.</p>
+      </div>
+    </div>
+    <div class="safety-card">
+      <div class="icon">⏱️</div>
+      <div>
+        <h4>3-Second Yellow Transition</h4>
+        <p>Safe, gradual transition — never abruptly cuts off traffic. Gives drivers time to stop.</p>
+      </div>
+    </div>
+    <div class="safety-card">
+      <div class="icon">🔧</div>
+      <div>
+        <h4>5-Second Hardware Watchdog</h4>
+        <p>If the device fails or loses power, the watchdog timer automatically restores normal traffic cycle within 5 seconds.</p>
+      </div>
+    </div>
+    <div class="safety-card">
+      <div class="icon">⚡</div>
+      <div>
+        <h4>Power-Loss Recovery</h4>
+        <p>On power failure, relays default to pass-through mode — the junction behaves exactly as if the device wasn't there.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: COST -->
+<div class="slide slide-cost" data-index="5">
+  <h2>Cost <span>Comparison</span></h2>
+  <div class="cost-compare">
+    <div class="cost-card ours">
+      <div class="label">NODI-Seconds</div>
+      <div class="price">Under ₹3,500</div>
+      <div class="note">Retrofit device for existing signals<br>Mic + Camera + Relay + Watchdog</div>
+    </div>
+    <div class="cost-card theirs">
+      <div class="label">Imported Solutions</div>
+      <div class="price">₹50,00,000+</div>
+      <div class="note">Full adaptive signal replacement<br>New controllers, sensors, infrastructure</div>
+    </div>
+  </div>
+  <div class="savings-badge">99.3% Cost Reduction</div>
+</div>
+
+<!-- SLIDE 7: VISION DETECTION -->
+<div class="slide slide-vision" data-index="6">
+  <h2>CCTV <span>Vision Detection</span></h2>
+  <p class="lead">NODI-Seconds uses the existing CCTV camera at each junction to visually confirm the ambulance — no extra sensors on the vehicle needed.</p>
+  <div class="solution-cols">
+    <div class="solution-box">
+      <h3>What the Camera Sees</h3>
+      <p>A small vision program analyzes the CCTV feed in real-time. It identifies the ambulance's <strong>distinctive shape</strong> — its rectangular body, light bar on top, and <strong>flashing emergency lights</strong> — separating it from regular traffic, two-wheelers, and buses.</p>
+    </div>
+    <div class="solution-box">
+      <h3>Why CCTV Over Optical Sensors</h3>
+      <p>Optical sensors only detect light flashes — they cannot distinguish an ambulance strobe from a police beacon or decorative LED. CCTV vision confirms the <strong>vehicle type AND the lights together</strong>, making detection far more reliable and eliminating false triggers.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: IMPACT -->
+<div class="slide slide-impact" data-index="7">
+  <h2>Every Second <span>Counts</span></h2>
+  <div class="impact-quote">
+    "In India, over 80% of traffic junctions have rigid timers where ambulances waste crucial 3-5 minutes, and 30% of private ambulances lack GPS. My device costs under ₹3,500 compared to ₹50-lakh imported solutions, yet it can be deployed on any of India's millions of fixed-time signals, preserving the golden hour for thousands."
+  </div>
+  <p class="closing">NODI-Seconds — Because every life that suffers in traffic is countable in seconds, and savable in seconds too.</p>
+  <p class="thanks">Thank you for listening.</p>
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav-bar">
+  <button onclick="prev()">← Prev</button>
+  <span class="counter" id="counter">1 / 8</span>
+  <button onclick="next()">Next →</button>
+</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+
+  function updateSlide() {
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'exit');
+      if (i === current) s.classList.add('active');
+      else if (i < current) s.classList.add('exit');
+    });
+    progress.style.width = ((current + 1) / total * 100) + '%';
+    counter.textContent = (current + 1) + ' / ' + total;
+  }
+
+  function next() { if (current < total - 1) { current++; updateSlide(); } }
+  function prev() { if (current > 0) { current--; updateSlide(); } }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    if (e.key === 'Home') { current = 0; updateSlide(); }
+    if (e.key === 'End') { current = total - 1; updateSlide(); }
+  });
+
+  // Touch support
+  let touchX = 0;
+  document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (dx < -50) next();
+    if (dx > 50) prev();
+  });
+</script>
+</body>
+</html>

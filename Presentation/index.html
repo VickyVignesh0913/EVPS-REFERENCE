@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NODI-Seconds — Siren-Activated Green Signal | INSPIRE-MANAK</title>
+
+  <!-- Google Fonts: Instrument Serif, Plus Jakarta Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/design-tokens.css">
+  <link rel="stylesheet" href="css/presentation.css">
+
+  <!-- GSAP 3.12+ via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+
+  <!-- Ambient Neural Synapse Background Canvas -->
+  <canvas id="neural-canvas"></canvas>
+
+  <!-- Architectural Overlays -->
+  <div class="grid-overlay"></div>
+  <div class="vignette-overlay"></div>
+
+  <!-- Progress Bar (Top) -->
+  <div class="deck-progress-bar" id="progress"></div>
+
+  <!-- 2-Minute Judge Pitch Timer (Top Right) -->
+  <div class="pitch-timer" id="pitchTimer" title="Click to start / pause 2-minute pitch clock">
+    <span class="status-dot" id="timerDot"></span>
+    <span id="timerText">02:00</span>
+  </div>
+
+  <!-- ========================================================================
+       SLIDES DECK
+       ======================================================================== -->
+  <div id="deck">
+
+    <!-- SLIDE 1: Title Hero (Cinematic Parallax & Glass Stat Dock) -->
+    <div class="slide active" data-slide="1">
+      <div class="slide-content-wrap">
+        <div class="hero-stage-grid">
+          <div class="hero-text-zone">
+            <div class="meta-badge">
+              <span class="dot"></span>
+              INSPIRE-MANAK 2026-27 &mdash; National Level Innovation
+            </div>
+            
+            <h1 class="slide-title">
+              NODI-Seconds: <em>Siren-Activated Green Signal</em><br>
+              with CCTV Vision &amp; Safety Fallback
+            </h1>
+            
+            <p class="slide-subtitle">
+              A compact retrofit device that clears ambulances through traffic in seconds &mdash; not minutes. Dual-confirm detection, zero infrastructure change, under &#8377;3,500.
+            </p>
+
+            <div class="hero-stats-dock">
+              <div class="hero-stat-card">
+                <div class="stat-label">Innovator Level</div>
+                <div class="stat-value">Vignesh Class 12 SJRS</div>
+              </div>
+              <div class="hero-stat-card">
+                <div class="stat-label">Detection Method</div>
+                <div class="stat-value">Dual-Confirm (Mic + CCTV)</div>
+              </div>
+              <div class="hero-stat-card">
+                <div class="stat-label">Cost Advantage</div>
+                <div class="stat-value gold">&#8377;3,500 vs &#8377;50L+ Imported</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual-zone">
+            <div class="media-viewport-16-9">
+              <div class="viewfinder-corner top-left"></div>
+              <div class="viewfinder-corner top-right"></div>
+              <div class="viewfinder-corner bottom-left"></div>
+              <div class="viewfinder-corner bottom-right"></div>
+              <img src="assets/slide-1-hero.png" alt="Ambulance approaching junction at dusk with green signal" />
+              <div class="media-hud-chip">
+                <div class="hud-left">
+                  <span class="live-indicator"></span>
+                  <span>JUNCTION JN-42 &bull; GREEN CORRIDOR ENGAGED</span>
+                </div>
+                <span>RESPONSE: &lt; 1.2s</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: The Critical Problem (Aerial Traffic Viewfinder) -->
+    <div class="slide" data-slide="2">
+      <div class="slide-content-wrap">
+        <div class="meta-badge danger-badge">
+          <span class="dot"></span>
+          The Critical Problem
+        </div>
+        <h2 class="slide-title">
+          Ambulances trapped in traffic <span class="hl-danger">waste the golden hour</span> at rigid, fixed-time signals.
+        </h2>
+        <p class="slide-subtitle">
+          Every day, emergency vehicles lose 3&ndash;5 minutes at each junction &mdash; cumulative delays across hospital corridors turn survivable emergencies into fatal outcomes.
+        </p>
+
+        <div class="problem-stage-grid">
+          <div class="problem-metrics-col">
+            <div class="stat-callout-panel">
+              <div class="num">80%</div>
+              <div class="meta">
+                <h4>Fixed-Time Signals Only</h4>
+                <p>Indian junctions run on rigid, pre-timed cycles with zero emergency vehicle pre-emption capability.</p>
+              </div>
+            </div>
+
+            <div class="stat-callout-panel">
+              <div class="num">3&ndash;5 m</div>
+              <div class="meta">
+                <h4>Critical Delay Per Junction</h4>
+                <p>Lost time compounds across arterial routes, destroying the vital golden hour for trauma and cardiac patients.</p>
+              </div>
+            </div>
+
+            <div class="stat-callout-panel">
+              <div class="num">240K+</div>
+              <div class="meta">
+                <h4>Annual Preventable Deaths</h4>
+                <p>Over 2.4 lakh lives lost annually in India due to emergency transit delays on congested urban corridors.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="problem-visual-col">
+            <div class="media-viewport-16-9">
+              <div class="viewfinder-corner top-left"></div>
+              <div class="viewfinder-corner top-right"></div>
+              <div class="viewfinder-corner bottom-left"></div>
+              <div class="viewfinder-corner bottom-right"></div>
+              <img src="assets/slide-2-problem.png" alt="Aerial view of ambulance gridlocked in dense traffic" />
+              <div class="media-hud-chip">
+                <div class="hud-left">
+                  <span class="live-indicator" style="background: #f43f5e; box-shadow: 0 0 8px #f43f5e;"></span>
+                  <span>TARGET: AMBULANCE TRAPPED IN GRIDLOCK</span>
+                </div>
+                <span>30% PRIVATE AMBULANCES LACK GPS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Gap Analysis (Direct Visual Split: Dead GPS vs Clean Retrofit) -->
+    <div class="slide" data-slide="3">
+      <div class="slide-content-wrap">
+        <div class="meta-badge">
+          <span class="dot"></span>
+          Gap Analysis &amp; Visual Evidence
+        </div>
+        <h2 class="slide-title">
+          GPS systems need vehicle tracking. <span class="hl-gold">30% of ambulances have none.</span>
+        </h2>
+        <p class="slide-subtitle">
+          Imported adaptive solutions require &#8377;50 Lakhs+ per junction. NODI-Seconds retrofits existing signal controllers in minutes.
+        </p>
+
+        <div class="split-stage-wrap">
+          <div class="split-hero-frame">
+            <div class="split-label-tag left-flawed">&#10005; LEGACY GPS DEPENDENCY (30% LACK GPS)</div>
+            <div class="split-label-tag right-solution">&#10003; NODI-SECONDS RETROFIT (100% INCLUSIVE)</div>
+            <img src="assets/slide-3-comparison.png" alt="Split photo: Left shows messy dashboard GPS with SIGNAL LOST, right shows clean NODI-Seconds box attached to traffic cabinet" />
+          </div>
+
+          <div class="comparison-dual-grid">
+            <div class="comparison-card flawed">
+              <div class="comp-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                <span class="comp-title">Legacy Systems (High Failure Rate)</span>
+              </div>
+              <ul class="comp-list">
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  <span><strong>GPS-Based Priority:</strong> Fails completely for 30% of private ambulances lacking GPS hardware.</span>
+                </li>
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  <span><strong>Adaptive Signal Overhaul:</strong> Costs &#8377;50 Lakhs+ per junction &mdash; requires full controller replacement.</span>
+                </li>
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  <span><strong>Optical Sensors:</strong> Blindly trigger on police beacons, high beams, and festive LED lights.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="comparison-card solution">
+              <div class="comp-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 17 9"/></svg>
+                <span class="comp-title">NODI-Seconds Approach (Direct Edge Intelligence)</span>
+              </div>
+              <ul class="comp-list">
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Zero Vehicle GPS Needed:</strong> Works for 100% of ambulances via roadside acoustic mic + CCTV camera.</span>
+                </li>
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Direct Retrofit Design:</strong> Mounts inside existing signal cabinets in 30 minutes under &#8377;3,500.</span>
+                </li>
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span><strong>Dual-Confirm Logic:</strong> Siren harmonics AND visual confirmation must agree &mdash; zero false triggers.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Detection Architecture (Isometric Hardware Blueprint) -->
+    <div class="slide" data-slide="4">
+      <div class="slide-content-wrap">
+        <div class="meta-badge">
+          <span class="dot"></span>
+          Hardware Architecture
+        </div>
+        <h2 class="slide-title">
+          Dual-Confirm <span class="hl-green">Siren + Vision</span> Hardware Stack
+        </h2>
+        <p class="slide-subtitle">
+          Two independent physical domains must agree before triggering &mdash; acoustic mic captures siren harmonics while CCTV confirms ambulance visually.
+        </p>
+
+        <div class="blueprint-stage-grid">
+          <div class="blueprint-visual-col">
+            <div class="media-viewport-16-9">
+              <div class="viewfinder-corner top-left"></div>
+              <div class="viewfinder-corner top-right"></div>
+              <div class="viewfinder-corner bottom-left"></div>
+              <div class="viewfinder-corner bottom-right"></div>
+              <img src="assets/slide-4-hardware.png" alt="Isometric technical blueprint showing Acoustic Mic, Camera Lens, and 4-Channel Relay Board" />
+              <div class="media-hud-chip">
+                <div class="hud-left">
+                  <span class="live-indicator"></span>
+                  <span>ISOMETRIC COMPONENT BLUEPRINT</span>
+                </div>
+                <span>HARDWARE-INTERLOCKED GPIO</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hardware-spec-col">
+            <div class="hw-spec-card">
+              <div class="hw-spec-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              </div>
+              <div class="hw-spec-body">
+                <div class="hw-tag">SENSOR 01 &bull; ACOUSTIC HARMONICS</div>
+                <div class="hw-title">Directional Microphone (600&ndash;1200 Hz)</div>
+                <p class="hw-desc">Hardware bandpass filter isolates ambulance wail/yelp frequencies, rejecting loud horns and engine roar.</p>
+              </div>
+            </div>
+
+            <div class="hw-spec-card">
+              <div class="hw-spec-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+              <div class="hw-spec-body">
+                <div class="hw-tag">SENSOR 02 &bull; EDGE AI VISUAL CONFIRMATION</div>
+                <div class="hw-title">Junction CCTV Vision Model</div>
+                <p class="hw-desc">Identifies vehicle chassis silhouette, rooftop light-bar, and flashing beacon cadence via existing roadside CCTV.</p>
+              </div>
+            </div>
+
+            <div class="hw-spec-card">
+              <div class="hw-spec-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              </div>
+              <div class="hw-spec-body">
+                <div class="hw-tag">OUTPUT &bull; FAIL-SAFE ACTUATION</div>
+                <div class="hw-title">4-Channel Interlocked Relay Board</div>
+                <p class="hw-desc">Physically drives signal contacts with electrical interlocks. Opposing green signals are mechanically impossible.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Detection Decision Path -->
+    <div class="slide" data-slide="5">
+      <div class="slide-content-wrap">
+        <div class="meta-badge">
+          <span class="dot"></span>
+          Detection Decision Path
+        </div>
+        <h2 class="slide-title">
+          The junction clears only after <span class="hl-gold">two signals agree</span>
+        </h2>
+        <p class="slide-subtitle">
+          A roadside microphone hears the siren. Existing CCTV verifies the ambulance. Only then does the relay reserve a safe green path.
+        </p>
+
+        <div class="detection-stage">
+          <div class="detection-image-frame">
+            <img src="assets/slide-5-detection.png" alt="Ambulance approaching a traffic light as the NODI-Seconds system establishes a green corridor" />
+            <div class="detection-image-caption"><span></span>JUNCTION RESPONSE, ONE SAFE DECISION</div>
+          </div>
+          <div class="detection-sequence" aria-label="NODI-Seconds detection sequence">
+            <div class="sequence-step"><span class="sequence-index">01</span><strong>Siren heard</strong><p>The microphone isolates ambulance harmonics.</p></div>
+            <div class="sequence-step"><span class="sequence-index">02</span><strong>Vehicle verified</strong><p>CCTV confirms the ambulance in view.</p></div>
+            <div class="sequence-step confirmation-step"><span class="sequence-index">03</span><strong>Both agree</strong><p>One sensor alone cannot change the signal.</p></div>
+            <div class="sequence-step"><span class="sequence-index">04</span><strong>Path reserved</strong><p>Cross traffic receives a three-second yellow.</p></div>
+            <div class="sequence-step"><span class="sequence-index">05</span><strong>Green corridor</strong><p>The normal cycle returns after the ambulance passes.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Safety Fallback System -->
+    <div class="slide" data-slide="6">
+      <div class="slide-content-wrap">
+        <div class="meta-badge warm-badge">
+          <span class="dot"></span>
+          Safety &amp; Fail-Safe Architecture
+        </div>
+        <h2 class="slide-title">
+          Built-In <span class="hl-gold">Safety Fallback</span> System
+        </h2>
+        <p class="slide-subtitle">
+          Three independent physical and timing mechanisms ensure no junction can ever enter a hazardous or conflicting signal state.
+        </p>
+
+        <div class="safety-stage-grid">
+          <div class="safety-card-stack">
+            <div class="safety-vault-card">
+              <div class="safety-badge-icon danger">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+              </div>
+              <div class="safety-body">
+                <div class="hw-tag" style="color: #fb7185;">FAIL-SAFE 01 &bull; HARDWARE INTERLOCK</div>
+                <div class="hw-title">No Conflicting Greens (Relay Interlock)</div>
+                <p class="hw-desc">4-channel relay board is electrically interlocked. Opposing green signals are mechanically impossible under all circumstances.</p>
+              </div>
+            </div>
+
+            <div class="safety-vault-card amber-glow">
+              <div class="safety-badge-icon warm">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="safety-body">
+                <div class="hw-tag" style="color: #fbbf24;">FAIL-SAFE 02 &bull; GRADUAL TRANSITION</div>
+                <div class="hw-title">3-Second Yellow Clearance Buffer</div>
+                <p class="hw-desc">Guarantees safe deceleration for cross-traffic. Never abruptly cuts off moving vehicles, preventing panic braking and collisions.</p>
+              </div>
+            </div>
+
+            <div class="safety-vault-card">
+              <div class="safety-badge-icon success">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="safety-body">
+                <div class="hw-tag" style="color: #34d399;">FAIL-SAFE 03 &bull; INDEPENDENT WATCHDOG</div>
+                <div class="hw-title">5-Second Hardware Watchdog Timer</div>
+                <p class="hw-desc">Hardware watchdog monitors heartbeat. If device loses power, disconnects, or crashes, junction returns to normal in 5 seconds.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="safety-visual-col">
+            <div class="media-viewport-16-9">
+              <div class="viewfinder-corner top-left"></div>
+              <div class="viewfinder-corner top-right"></div>
+              <div class="viewfinder-corner bottom-left"></div>
+              <div class="viewfinder-corner bottom-right"></div>
+              <img src="assets/slide-6-safety.png" alt="Traffic signal with amber transition illuminated in rain at dusk" />
+              <div class="media-hud-chip">
+                <div class="hud-left">
+                  <span class="live-indicator" style="background: #f59e0b; box-shadow: 0 0 8px #f59e0b;"></span>
+                  <span>AMBER CLEARANCE TRANSITION (3.0s)</span>
+                </div>
+                <span>WATCHDOG: ARMED</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: Cost Advantage & Disruption -->
+    <div class="slide" data-slide="7">
+      <div class="slide-content-wrap">
+        <div class="meta-badge">
+          <span class="dot"></span>
+          Economic Disruption
+        </div>
+        <h2 class="slide-title">
+          <span class="hl-gold">99.3% Cost Reduction</span> vs Imported Systems
+        </h2>
+        <p class="slide-subtitle">
+          Under &#8377;3,500 per junction &mdash; deployable on India's millions of existing fixed-time signals without civil works or controller replacement.
+        </p>
+
+        <div class="cost-stage-grid">
+          <div class="cost-visual-col">
+            <div class="media-viewport-16-9">
+              <div class="viewfinder-corner top-left"></div>
+              <div class="viewfinder-corner top-right"></div>
+              <div class="viewfinder-corner bottom-left"></div>
+              <div class="viewfinder-corner bottom-right"></div>
+              <img src="assets/slide-7-cost.png" alt="Hand holding tiny glowing ₹3,500 circuit board against massive server warehouse" />
+              <div class="media-hud-chip">
+                <div class="hud-left">
+                  <span class="live-indicator"></span>
+                  <span>&#8377;3,500 ALL-IN-ONE RETROFIT MODULE</span>
+                </div>
+                <span>99.3% CAPEX SAVINGS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cost-compare-col">
+            <div class="cost-hero-panel solution-panel">
+              <div class="cost-eyebrow">NODI-Seconds Breakthrough</div>
+              <div class="cost-num-big">Under &#8377;3,500</div>
+              <p class="panel-desc">
+                Directional acoustic microphone + CCTV edge vision integration + 4-channel relay board + hardware watchdog. Attaches to existing signal cabinets in 30 minutes with zero civil works.
+              </p>
+            </div>
+
+            <div class="cost-hero-panel legacy-panel">
+              <div class="cost-eyebrow">Imported Adaptive Signal Solutions</div>
+              <div class="cost-num-big">&#8377;50,00,000+</div>
+              <p class="panel-desc">
+                Complete intersection overhaul requiring foreign proprietary controllers, underground road-induction loops, imported optical beacons, and recurring annual maintenance license fees.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: Vision Intelligence Over Optical Sensors -->
+    <div class="slide" data-slide="8">
+      <div class="slide-content-wrap">
+        <div class="meta-badge">
+          <span class="dot"></span>
+          Surveillance Edge Intelligence
+        </div>
+        <h2 class="slide-title">
+          CCTV Vision <span class="hl-green">Over Optical Sensors</span>
+        </h2>
+        <p class="slide-subtitle">
+          Why camera-based AI detection outperforms simple light-flash sensors &mdash; eliminating false alarms from police beacons and headlights.
+        </p>
+
+        <div class="vision-stage-wrap">
+          <div class="vision-hero-frame">
+            <div class="split-label-tag left-flawed">&#10005; OPTICAL SENSOR: BLINDED BY GLARE</div>
+            <div class="split-label-tag right-solution">&#10003; CCTV AI: BOUNDING BOX &amp; CONFIDENCE 98.9%</div>
+            <img src="assets/slide-8-vision.png" alt="Twin tactical monitors: Left blinded by optical glare, right detecting ambulance with AI bounding box" />
+          </div>
+
+          <div class="comparison-dual-grid">
+            <div class="comparison-card flawed">
+              <div class="comp-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                <span class="comp-title">Optical Sensors Only (High False Triggers)</span>
+              </div>
+              <ul class="comp-list">
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  <span>Detects raw light flashes only &mdash; cannot identify the vehicle emitting the light.</span>
+                </li>
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  <span>Falsely triggers on police strobes, VIP motorcades, high beams, and wet asphalt reflections.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="comparison-card solution">
+              <div class="comp-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9 12 12 15 17 9"/></svg>
+                <span class="comp-title">NODI-Seconds CCTV Edge AI (Robust)</span>
+              </div>
+              <ul class="comp-list">
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Identifies ambulance silhouette, emergency decals, and synchronized rooftop light-bar cadence.</span>
+                </li>
+                <li>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Uses existing junction CCTV cameras already installed &mdash; requiring zero extra vehicle equipment.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: End-to-End Detection Pipeline -->
+    <div class="slide" data-slide="9">
+      <div class="slide-content-wrap">
+        <div class="meta-badge">
+          <span class="dot"></span>
+          Engineering Pipeline
+        </div>
+        <h2 class="slide-title">
+          End-to-End <span class="hl-gold">Detection Pipeline</span>
+        </h2>
+        <p class="slide-subtitle">
+          From siren sound to green light &mdash; the four synchronized phases of the NODI-Seconds detection-to-actuation lifecycle.
+        </p>
+
+        <div class="pipeline-stage-wrap">
+          <div class="pipeline-hero-ribbon">
+            <img src="assets/slide-9-pipeline.png" alt="Neon pipeline diagram: Ambulance to Sound Wave to Microchip to Green Traffic Light" />
+          </div>
+
+          <div class="pipeline-cards-4">
+            <div class="pipeline-step-card">
+              <div class="step-idx">PHASE 01</div>
+              <div class="step-title">1. Approach</div>
+              <p class="step-desc">Ambulance approaches within 200m zone. Siren blares acoustic signature while emergency roof beacons flash.</p>
+            </div>
+
+            <div class="pipeline-step-card">
+              <div class="step-idx">PHASE 02</div>
+              <div class="step-title">2. Dual-Sensing</div>
+              <p class="step-desc">Roadside microphone isolates 600&ndash;1200 Hz siren harmonics while junction camera validates vehicle silhouette.</p>
+            </div>
+
+            <div class="pipeline-step-card">
+              <div class="step-idx">PHASE 03</div>
+              <div class="step-title">3. Logic Decision</div>
+              <p class="step-desc">Microcontroller cross-validates acoustic frequency match with visual detection confidence (&gt;95%) before trigger.</p>
+            </div>
+
+            <div class="pipeline-step-card">
+              <div class="step-idx">PHASE 04</div>
+              <div class="step-title">4. Green Corridor</div>
+              <p class="step-desc">Controller energizes 3s Yellow clearance on cross-lanes, then locks Green for seamless ambulance transit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: Sunrise Vision & National Impact -->
+    <div class="slide" data-slide="10">
+      <div class="slide-content-wrap">
+        <div class="vision-horizon-wrap">
+          <img class="vision-bg-img" src="assets/slide-10-vision.png" alt="Ambulance driving into golden sunrise on clear highway under green signals" />
+          <div class="vision-scrim"></div>
+          
+          <div class="vision-body-content">
+            <div class="meta-badge warm-badge" style="margin-bottom: 14px;">
+              <span class="dot"></span>
+              INSPIRE-MANAK 2026-27 &bull; NATIONAL LEVEL INNOVATION
+            </div>
+            
+            <h2 class="vision-conclusion-title">
+              Every second counts.<br>
+              <span class="hl-gold">NODI-Seconds saves them.</span>
+            </h2>
+            
+            <p class="vision-conclusion-subtitle">
+              Deployable on India's millions of existing fixed-time signals &mdash; preserving the golden hour for thousands of lives at a fraction of imported cost.
+            </p>
+
+            <div class="vision-pills-row">
+              <div class="vision-pill">
+                <span class="pill-dot"></span>
+                <span>100% Ambulance Inclusivity (Zero GPS Needed)</span>
+              </div>
+              <div class="vision-pill">
+                <span class="pill-dot"></span>
+                <span>Under &#8377;3,500 Retrofit per Junction</span>
+              </div>
+              <div class="vision-pill">
+                <span class="pill-dot"></span>
+                <span>Fail-Safe Hardware Watchdog Protected</span>
+              </div>
+              <div class="vision-pill">
+                <span class="pill-dot"></span>
+                <span>Vignesh — Class 12 SJRS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="slide-counter-corner" aria-label="Current slide">
+    <span>SLIDE</span>
+    <strong id="slideCounter">01 / 10</strong>
+  </div>
+
+  <!-- Modular Scripts -->
+  <script src="js/background-mesh.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/deck.js"></script>
+
+</body>
+</html>

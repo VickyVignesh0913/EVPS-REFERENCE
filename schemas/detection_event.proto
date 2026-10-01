@@ -1,0 +1,40 @@
+// DetectionEvent — emitted by edge detection engine
+syntax = "proto3";
+
+package evp.v1;
+
+message DetectionEvent {
+  string event_id = 1;           // UUID v4
+  string timestamp = 2;          // ISO 8601 UTC
+  string junction_id = 3;        // e.g., "JN-001"
+  string camera_id = 4;          // e.g., "CAM-001-N"
+  
+  Detection detection = 5;
+  EdgeMetadata edge_metadata = 6;
+}
+
+message Detection {
+  int64 track_id = 1;
+  string class = 2;              // ambulance_108, ambulance_private, fire_tender, etc.
+  float confidence = 3;
+  BoundingBox bbox = 4;
+  float estimated_speed_kmh = 5;
+  float heading_degrees = 6;
+  float distance_from_camera_m = 7;
+  repeated string fusion_modalities = 8;  // ["visual", "audio", "gps"]
+  float audio_confidence = 9;
+  string gps_match_vehicle_id = 10;        // e.g., "108-MH-01-2345"
+}
+
+message BoundingBox {
+  int32 x1 = 1;
+  int32 y1 = 2;
+  int32 x2 = 3;
+  int32 y2 = 4;
+}
+
+message EdgeMetadata {
+  int32 inference_latency_ms = 1;
+  string model_version = 2;      // e.g., "yolov11-india-v2.3"
+  string edge_server_id = 3;     // e.g., "EDGE-001"
+}

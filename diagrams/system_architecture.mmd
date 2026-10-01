@@ -1,0 +1,68 @@
+```mermaid
+flowchart TB
+    subgraph EDGE["🔴 EDGE LAYER (Per Junction)"]
+        CAM1[CCTV Stream 1<br/>RTSP/ONVIF]
+        CAM2[CCTV Stream 2]
+        CAMN[CCTV Stream N]
+        AUDIO[Audio Sensor<br/>Siren Detection]
+        
+        EDGE_HW[Jetson Orin Industrial<br/>YOLOv11 + ByteTrack<br/>YAMNet Siren Classifier]
+        
+        CAM1 --> EDGE_HW
+        CAM2 --> EDGE_HW
+        CAMN --> EDGE_HW
+        AUDIO --> EDGE_HW
+        
+        EDGE_HW --> LOCAL_MQTT[(Mosquitto MQTT)]
+        LOCAL_MQTT --> DETECT[Detection Engine]
+        DETECT --> TRAJ[Trajectory Predictor<br/>Kalman + Map Match]
+        
+        TRAJ --> FUSION[Multi-Modal Fusion<br/>Vision + Audio + GPS]
+        GPS_108[108 Ambulance GPS API] --> FUSION
+        
+        FUSION --> LOCAL_CTRL[Local Signal Controller<br/>Relay Board / Vendor API]
+    end
+
+    subgraph CORRIDOR["🟡 CORRIDOR LAYER (5-20 Junctions)"]
+        LOCAL_MQTT -.->|DetectionEvent| CORR_SERVER[Corridor Aggregation Server]
+        CORR_SERVER --> KAFKA_CORR[(RabbitMQ / Kafka<br/>Corridor Bus)]
+        KAFKA_CORR --> RL_OPT[Signal Optimizer<br/>OR-Tools MILP / PPO RL]
+        RL_OPT --> PHASE[Green Wave Phase Plan]
+        PHASE --> LOCAL_CTRL
+    end
+
+    subgraph CLOUD["🟢 CLOUD / ICCC LAYER (City Scale)"]
+        KAFKA_CORR -.->|PredictedArrival| KAFKA_CITY[(Apache Kafka<br/>City Cluster)]
+        
+        KAFKA_CITY --> ORCHESTRATOR[Central Orchestrator<br/>Kubernetes Deployment]
+        ORCHESTRATOR --> DB[(TimescaleDB<br/>Events + Audit Log)]
+        ORCHESTRATOR --> DIGITAL_TWIN[Digital Twin<br/>Simulation Engine]
+        ORCHESTRATOR --> API_GW[API Gateway<br/>REST + WebSocket]
+        
+        GPS_108 -.->|MoU API| ORCHESTRATOR
+        TRAFFIC_POLICE[Traffic Police CAD] -.->|MoU API| ORCHESTRATOR
+        FIRE[Fire Dept Dispatch] -.->|MoU API| ORCHESTRATOR
+    end
+
+    subgraph CITIZEN["🔵 CITIZEN LAYER"]
+        API_GW --> TILE38[(Tile38<br/>Geofencing Engine)]
+        TILE38 --> FCM[FCM / APNs Gateway]
+        FCM --> MOBILE_APP[Flutter Mobile App<br/>Geofenced Alerts + TTS]
+        API_GW --> WEB_DASH[ICCC Web Dashboard<br/>Traffic Controller View]
+    end
+
+    subgraph FIELD["🟠 FIELD CONTROL"]
+        KAFKA_CITY -.->|SignalPhaseRequest| SIG_GW[Signal Controller Gateway]
+        SIG_GW -->|NTCIP / JSON API| SCATS[SCATS/SCOOT<br/>Adaptive Controllers]
+        SIG_GW -->|GPIO / Dry Contact| LEGACY[Legacy Fixed-Time<br/>Controllers]
+        SCATS --> LAMPS[Physical Signal Lamps]
+        LEGACY --> LAMPS
+        SIG_GW -.->|PhaseAck| KAFKA_CITY
+    end
+
+    style EDGE fill:#ffcccc,stroke:#cc0000,stroke-width:2px
+    style CORRIDOR fill:#fff5cc,stroke:#cc9900,stroke-width:2px
+    style CLOUD fill:#ccffcc,stroke:#009900,stroke-width:2px
+    style CITIZEN fill:#cce5ff,stroke:#0066cc,stroke-width:2px
+    style FIELD fill:#ffe5cc,stroke:#cc6600,stroke-width:2px
+```

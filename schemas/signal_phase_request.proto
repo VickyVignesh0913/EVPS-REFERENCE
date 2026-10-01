@@ -1,0 +1,36 @@
+// SignalPhaseRequest — sent to signal controller
+syntax = "proto3";
+
+package evp.v1;
+
+message SignalPhaseRequest {
+  string request_id = 1;
+  string junction_id = 2;
+  string timestamp = 3;
+  
+  PriorityLevel priority_level = 4;
+  RequestedAction requested_action = 5;
+  string target_approach = 6;
+  int32 current_phase = 7;
+  int32 requested_phase = 8;
+  int32 extension_seconds = 9;
+  int32 max_override_seconds = 10;
+  string expires_at = 11;          // ISO 8601
+  int64 emergency_vehicle_track_id = 12;
+  string justification = 13;
+}
+
+enum PriorityLevel {
+  PRIORITY_UNSPECIFIED = 0;
+  EMERGENCY = 1;        // Ambulance, fire, life-safety
+  HIGH = 2;             // Police emergency
+  MEDIUM = 3;           // VIP movement (if authorized)
+  LOW = 4;              // Routine
+}
+
+enum RequestedAction {
+  ACTION_UNSPECIFIED = 0;
+  EXTEND_GREEN = 1;
+  SKIP_TO_PHASE = 2;
+  FORCE_PHASE = 3;      // Use with extreme caution
+}

@@ -1,0 +1,28 @@
+// CitizenAlert — pushed to mobile app
+syntax = "proto3";
+
+package evp.v1;
+
+message CitizenAlert {
+  string alert_id = 1;
+  string timestamp = 2;
+  
+  Location user_location = 3;
+  string alert_type = 4;           // EMERGENCY_VEHICLE_APPROACHING
+  string vehicle_type = 5;         // ambulance, fire_tender, police
+  string vehicle_id = 6;           // anonymized or 108 ID
+  int32 eta_seconds = 7;
+  int32 distance_meters = 8;
+  string approach_direction = 9;   // from_north, from_south, etc.
+  string recommended_action = 10;  // YIELD_LEFT, PULL_OVER, STOP
+  string nearby_junction = 11;
+  int32 geofence_radius_m = 12;
+  string language = 13;            // hi, ta, te, kn, bn, en
+  string message = 14;             // Localized TTS-ready text
+  int32 ttl_seconds = 15;
+}
+
+message Location {
+  double lat = 1;
+  double lon = 2;
+}

@@ -1,0 +1,27 @@
+// PhaseAck — confirmation from signal controller
+syntax = "proto3";
+
+package evp.v1;
+
+message PhaseAck {
+  string ack_id = 1;
+  string request_id = 2;
+  string junction_id = 3;
+  string timestamp = 4;
+  
+  AckStatus status = 5;
+  int32 current_phase = 6;
+  int32 green_remaining_seconds = 7;
+  string conflicting_approach_status = 8;  // RED_HOLD, RED_CLEARING, GREEN
+  bool safety_check_passed = 9;
+  string controller_type = 10;  // LEGACY_RELAY, SCATS, SCOOT, ADAPTIVE_AI
+}
+
+enum AckStatus {
+  ACK_UNSPECIFIED = 0;
+  APPLIED = 1;
+  REJECTED = 2;
+  PARTIAL = 3;
+  FAILED = 4;
+  TIMEOUT = 5;
+}
